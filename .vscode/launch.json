@@ -1,0 +1,32 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Start Command",
+			"skipFiles": ["<node_internals>/**"],
+			"program": "${workspaceFolder}/bin/run.ts",
+			"args": ["start"],
+			"runtimeArgs": ["-r", "ts-node/register"],
+			"outFiles": ["${workspaceFolder}/dist/**/*.js"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Parse Command",
+			"skipFiles": ["<node_internals>/**"],
+			"program": "${workspaceFolder}/bin/run.ts",
+			"args": ["parse"],
+			"runtimeArgs": ["-r", "ts-node/register"],
+			"outFiles": ["${workspaceFolder}/dist/**/*.js"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen"
+		}
+	]
+}

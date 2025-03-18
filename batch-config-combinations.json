@@ -1,0 +1,14 @@
+{
+	"clients": [0, 1, 2, 3],
+	"duration": [60],
+	"resolutions": [
+		{ "width": 1920, "height": 1080 },
+		{ "width": 2560, "height": 1440 },
+		{ "width": 1280, "height": 720 }
+	],
+	"frameRate": [30, 60],
+	"audio": [true, false],
+	"hardware": [true, false],
+	"runsPerConfig": [6],
+	"filter": "!(config.clients == 0 && (config.audio === false || config.hardware === false || config.width !== 1920))"
+}
