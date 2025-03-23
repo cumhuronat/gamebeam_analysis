@@ -216,28 +216,24 @@ export async function handler(argv: ArgumentsCamelCase<BatchArgv>) {
 			);
 		}
 
-		for (let i = startIndex; i < configurations.length; i++) {
-			const config = configurations[i];
-
-			if (!config || typeof config !== "object") {
-				logger.error(`Invalid configuration found at index ${i}, skipping`);
-				continue;
+		const totalRuns = commandLineRunsPerConfig || 1;
+		
+		for (let runNumber = 1; runNumber <= totalRuns; runNumber++) {
+			if (totalRuns > 1) {
+				logger.info(`Starting run ${runNumber}/${totalRuns} across all configurations`);
 			}
+			
+			for (let i = startIndex; i < configurations.length; i++) {
+				const config = configurations[i];
 
-			logger.info(
-				`Running configuration ${i}/${configurations.length - 1} --clients ${config.clients} --duration ${config.duration} --width ${config.width} --height ${config.height} --frameRate ${config.frameRate} --audio ${config.audio} --hardware ${config.hardware}`,
-			);
-
-			// Determine number of runs for this configuration
-			const runsPerConfig =
-				config.runsPerConfig || commandLineRunsPerConfig || 1;
-
-			for (let runNumber = 1; runNumber <= runsPerConfig; runNumber++) {
-				if (runsPerConfig > 1) {
-					logger.info(
-						`Run ${runNumber}/${runsPerConfig} for configuration ${i}`,
-					);
+				if (!config || typeof config !== "object") {
+					logger.error(`Invalid configuration found at index ${i}, skipping`);
+					continue;
 				}
+
+				logger.info(
+					`Running configuration ${i}/${configurations.length - 1} (Run ${runNumber}/${totalRuns}) --clients ${config.clients} --duration ${config.duration} --width ${config.width} --height ${config.height} --frameRate ${config.frameRate} --audio ${config.audio} --hardware ${config.hardware}`,
+				);
 
 				const command = `tsx ./bin/run.ts start --clients ${config.clients} --duration ${config.duration} --width ${config.width} --height ${config.height} --frameRate ${config.frameRate} --audio ${config.audio} --hardware ${config.hardware}`;
 
@@ -262,7 +258,7 @@ export async function handler(argv: ArgumentsCamelCase<BatchArgv>) {
 							stdio: "inherit",
 							windowsHide: true,
 						});
-						logger.info(`Configuration ${i} completed successfully`);
+						logger.info(`Configuration ${i} (Run ${runNumber}/${totalRuns}) completed successfully`);
 						success = true;
 					} catch (error) {
 						const err = error as any;
@@ -278,14 +274,14 @@ export async function handler(argv: ArgumentsCamelCase<BatchArgv>) {
 								`Maximum retry attempts (${maxRetries}) reached for configuration ${i}. Exiting...`,
 							);
 							logger.info(
-								`To resume testing, run: tsx ./bin/run.ts batch --startIndex ${i + 1}`,
+								`To resume testing, run: tsx ./bin/run.ts batch --startIndex ${i + 1} --runsPerConfig ${totalRuns - runNumber + 1}`,
 							);
 							process.exit(1);
 						}
 					}
 				}
 
-				if (i < configurations.length - 1 || runNumber < runsPerConfig) {
+				if (i < configurations.length - 1 || runNumber < totalRuns) {
 					logger.info(
 						`Waiting ${delaySeconds} seconds before starting next configuration...`,
 					);
@@ -293,6 +289,13 @@ export async function handler(argv: ArgumentsCamelCase<BatchArgv>) {
 						setTimeout(resolve, delaySeconds * 1000),
 					);
 				}
+			}
+			
+			if (runNumber < totalRuns) {
+				logger.info(`Completed run ${runNumber}/${totalRuns}. Starting next run of all configurations...`);
+				await new Promise((resolve) =>
+					setTimeout(resolve, delaySeconds * 2 * 1000), 
+				);
 			}
 		}
 
