@@ -6,7 +6,8 @@
     "height": 1080,
     "frameRate": 30,
     "audio": true,
-    "hardware": true
+    "hardware": true,
+    "game": "default_game"
   },
   "variants": {
     "clients": [0, 2, 3],
@@ -16,7 +17,8 @@
     ],
     "frameRate": [60],
     "audio": [false],
-    "hardware": [false]
+    "hardware": [false],
+    "game": ["game1", "game2", "game3"]
   },
   "runsPerConfig": 30
 }

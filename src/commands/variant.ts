@@ -12,6 +12,7 @@ interface BaselineConfig {
   frameRate: number;
   audio: boolean;
   hardware: boolean;
+  game: string;
 }
 
 interface ResolutionPair {
@@ -28,6 +29,7 @@ interface VariantConfig {
     frameRate?: number[];
     audio?: boolean[];
     hardware?: boolean[];
+    game?: string[];
   };
   runsPerConfig: number;
 }
@@ -153,6 +155,18 @@ function generateVariantConfigurations(variantConfig: VariantConfig): BaselineCo
     }
   }
   
+  // Game variants
+  if (variants.game && variants.game.length > 0) {
+    for (const game of variants.game) {
+      if (game !== baseline.game) {
+        configurations.push({
+          ...baseline,
+          game
+        });
+      }
+    }
+  }
+  
   return configurations;
 }
 
@@ -176,6 +190,9 @@ function getConfigDescription(config: BaselineConfig, baseline: BaselineConfig):
   }
   if (config.hardware !== baseline.hardware) {
     differences.push(`hardware: ${config.hardware}`);
+  }
+  if (config.game !== baseline.game) {
+    differences.push(`game: ${config.game}`);
   }
   
   if (differences.length === 0) {
@@ -211,7 +228,7 @@ export async function handler(argv: ArgumentsCamelCase<VariantArgv>) {
     }
     
     logger.info(`Found ${configurations.length} configurations to run (baseline + variants)`);
-    logger.info(`Baseline: clients=${variantConfig.baseline.clients}, duration=${variantConfig.baseline.duration}, resolution=${variantConfig.baseline.width}x${variantConfig.baseline.height}, frameRate=${variantConfig.baseline.frameRate}, audio=${variantConfig.baseline.audio}, hardware=${variantConfig.baseline.hardware}`);
+    logger.info(`Baseline: clients=${variantConfig.baseline.clients}, duration=${variantConfig.baseline.duration}, resolution=${variantConfig.baseline.width}x${variantConfig.baseline.height}, frameRate=${variantConfig.baseline.frameRate}, audio=${variantConfig.baseline.audio}, hardware=${variantConfig.baseline.hardware}, game=${variantConfig.baseline.game}`);
 
     
     if (startIndex < 0 || startIndex >= configurations.length) {
@@ -250,10 +267,10 @@ export async function handler(argv: ArgumentsCamelCase<VariantArgv>) {
         );
         
         logger.info(
-          `Parameters: --clients ${config.clients} --duration ${config.duration} --width ${config.width} --height ${config.height} --frameRate ${config.frameRate} --audio ${config.audio} --hardware ${config.hardware}`
+          `Parameters: --clients ${config.clients} --duration ${config.duration} --width ${config.width} --height ${config.height} --frameRate ${config.frameRate} --audio ${config.audio} --hardware ${config.hardware} --game ${config.game}`
         );
         
-        const command = `tsx ./bin/run.ts start --clients ${config.clients} --duration ${config.duration} --width ${config.width} --height ${config.height} --frameRate ${config.frameRate} --audio ${config.audio} --hardware ${config.hardware}`;
+        const command = `tsx ./bin/run.ts start --clients ${config.clients} --duration ${config.duration} --width ${config.width} --height ${config.height} --frameRate ${config.frameRate} --audio ${config.audio} --hardware ${config.hardware} --game ${config.game}`;
         
         let success = false;
         let retryCount = 0;
