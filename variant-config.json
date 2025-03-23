@@ -1,0 +1,22 @@
+{
+  "baseline": {
+    "clients": 1,
+    "duration": 60,
+    "width": 1920,
+    "height": 1080,
+    "frameRate": 30,
+    "audio": true,
+    "hardware": true
+  },
+  "variants": {
+    "clients": [0, 2, 3],
+    "resolutions": [
+      { "width": 1280, "height": 720 },
+      { "width": 2560, "height": 1440 }
+    ],
+    "frameRate": [60],
+    "audio": [false],
+    "hardware": [false]
+  },
+  "runsPerConfig": 30
+}
