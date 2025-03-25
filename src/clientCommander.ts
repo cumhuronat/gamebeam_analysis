@@ -28,7 +28,7 @@ export class ClientCommander extends EventEmitter {
 		super();
 		this.url = url;
 		this.runId = runId;
-		this.index = index+1;
+		this.index = index + 1;
 	}
 
 	private async wait(seconds: number): Promise<void> {
@@ -148,7 +148,7 @@ export class ClientCommander extends EventEmitter {
 				return await blob.text();
 			});
 
-      fs.writeFileSync("webrtc_dump.json", webrtcDumpContent);
+			fs.writeFileSync("webrtc_dump.json", webrtcDumpContent);
 
 			const parser = new WebrtcDumpParser(webrtcDumpContent);
 			const results = parser.parse();

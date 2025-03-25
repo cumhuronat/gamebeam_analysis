@@ -1,0 +1,1622 @@
+{
+  "id": "b5267b31-d112-45a8-842f-7ccf7fd61f0c",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.delay_measurements": {
+      "name": "delay_measurements",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "run_id": {
+          "name": "run_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "delay": {
+          "name": "delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_delay_measurements_run_id": {
+          "name": "idx_delay_measurements_run_id",
+          "columns": [
+            {
+              "expression": "run_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_delay_measurements_timestamp": {
+          "name": "idx_delay_measurements_timestamp",
+          "columns": [
+            {
+              "expression": "timestamp",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "delay_measurements_run_id_fkey": {
+          "name": "delay_measurements_run_id_fkey",
+          "tableFrom": "delay_measurements",
+          "tableTo": "runs",
+          "columnsFrom": [
+            "run_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.performance_metrics": {
+      "name": "performance_metrics",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "run_id": {
+          "name": "run_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gpu_utilization": {
+          "name": "gpu_utilization",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "working_set_private": {
+          "name": "working_set_private",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cpu_usage": {
+          "name": "cpu_usage",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bytes_received": {
+          "name": "bytes_received",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bytes_sent": {
+          "name": "bytes_sent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "packets_received": {
+          "name": "packets_received",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "packets_sent": {
+          "name": "packets_sent",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nv_gpu_power": {
+          "name": "nv_gpu_power",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_temp": {
+          "name": "nv_gpu_temp",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_mem_temp": {
+          "name": "nv_gpu_mem_temp",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_sm": {
+          "name": "nv_gpu_sm",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_mem": {
+          "name": "nv_gpu_mem",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_enc": {
+          "name": "nv_gpu_enc",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_dec": {
+          "name": "nv_gpu_dec",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_jpg": {
+          "name": "nv_gpu_jpg",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_ofa": {
+          "name": "nv_gpu_ofa",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_mem_clock": {
+          "name": "nv_gpu_mem_clock",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nv_gpu_clock": {
+          "name": "nv_gpu_clock",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_performance_metrics_run_id": {
+          "name": "idx_performance_metrics_run_id",
+          "columns": [
+            {
+              "expression": "run_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_performance_metrics_timestamp": {
+          "name": "idx_performance_metrics_timestamp",
+          "columns": [
+            {
+              "expression": "timestamp",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "performance_metrics_run_id_fkey": {
+          "name": "performance_metrics_run_id_fkey",
+          "tableFrom": "performance_metrics",
+          "tableTo": "runs",
+          "columnsFrom": [
+            "run_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.runs": {
+      "name": "runs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "game": {
+          "name": "game",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "clients": {
+          "name": "clients",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "width": {
+          "name": "width",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "height": {
+          "name": "height",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration": {
+          "name": "duration",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "audio": {
+          "name": "audio",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "frame_rate": {
+          "name": "frame_rate",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hardware": {
+          "name": "hardware",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "game_started_at": {
+          "name": "game_started_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.webrtc_audio_metrics": {
+      "name": "webrtc_audio_metrics",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "run_id": {
+          "name": "run_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ssrc": {
+          "name": "ssrc",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transport_id": {
+          "name": "transport_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "codec_id": {
+          "name": "codec_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "codec": {
+          "name": "codec",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter": {
+          "name": "jitter",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_lost": {
+          "name": "packets_lost",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "playout_id": {
+          "name": "playout_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "track_identifier": {
+          "name": "track_identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mid": {
+          "name": "mid",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "remote_id": {
+          "name": "remote_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_received": {
+          "name": "packets_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_received_per_s": {
+          "name": "packets_received_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_discarded": {
+          "name": "packets_discarded",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_discarded_per_s": {
+          "name": "packets_discarded_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fec_packets_received": {
+          "name": "fec_packets_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fec_packets_received_per_s": {
+          "name": "fec_packets_received_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fec_packets_discarded": {
+          "name": "fec_packets_discarded",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fec_packets_discarded_per_s": {
+          "name": "fec_packets_discarded_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_received": {
+          "name": "bytes_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_received_in_bits_per_s": {
+          "name": "bytes_received_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "header_bytes_received": {
+          "name": "header_bytes_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "header_bytes_received_in_bits_per_s": {
+          "name": "header_bytes_received_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_packet_received_timestamp": {
+          "name": "last_packet_received_timestamp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_delay": {
+          "name": "jitter_buffer_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_delay_per_jitter_buffer_emitted_count_in_ms": {
+          "name": "jitter_buffer_delay_per_jitter_buffer_emitted_count_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_target_delay": {
+          "name": "jitter_buffer_target_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_target_delay_per_jitter_buffer_emitted_count_in_ms": {
+          "name": "jitter_buffer_target_delay_per_jitter_buffer_emitted_count_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_minimum_delay": {
+          "name": "jitter_buffer_minimum_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_minimum_delay_per_jitter_buffer_emitted_count_in_ms": {
+          "name": "jitter_buffer_minimum_delay_per_jitter_buffer_emitted_count_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_emitted_count": {
+          "name": "jitter_buffer_emitted_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_samples_received": {
+          "name": "total_samples_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_samples_received_per_s": {
+          "name": "total_samples_received_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "concealed_samples": {
+          "name": "concealed_samples",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "concealed_samples_per_s": {
+          "name": "concealed_samples_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "concealed_samples_per_total_samples_received": {
+          "name": "concealed_samples_per_total_samples_received",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "silent_concealed_samples": {
+          "name": "silent_concealed_samples",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "silent_concealed_samples_per_s": {
+          "name": "silent_concealed_samples_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "concealment_events": {
+          "name": "concealment_events",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "inserted_samples_for_deceleration": {
+          "name": "inserted_samples_for_deceleration",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "inserted_samples_for_deceleration_per_s": {
+          "name": "inserted_samples_for_deceleration_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "removed_samples_for_acceleration": {
+          "name": "removed_samples_for_acceleration",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "removed_samples_for_acceleration_per_s": {
+          "name": "removed_samples_for_acceleration_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "audio_level": {
+          "name": "audio_level",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_audio_energy": {
+          "name": "total_audio_energy",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "audio_level_in_rms": {
+          "name": "audio_level_in_rms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_samples_duration": {
+          "name": "total_samples_duration",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_processing_delay": {
+          "name": "total_processing_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_processing_delay_per_jitter_buffer_emitted_count_in_ms": {
+          "name": "total_processing_delay_per_jitter_buffer_emitted_count_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_flushes": {
+          "name": "jitter_buffer_flushes",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "delayed_packet_outage_samples": {
+          "name": "delayed_packet_outage_samples",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "relative_packet_arrival_delay": {
+          "name": "relative_packet_arrival_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "interruption_count": {
+          "name": "interruption_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_interruption_duration": {
+          "name": "total_interruption_duration",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_webrtc_audio_metrics_run_id": {
+          "name": "idx_webrtc_audio_metrics_run_id",
+          "columns": [
+            {
+              "expression": "run_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_webrtc_audio_metrics_timestamp": {
+          "name": "idx_webrtc_audio_metrics_timestamp",
+          "columns": [
+            {
+              "expression": "timestamp",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "webrtc_audio_metrics_run_id_fkey": {
+          "name": "webrtc_audio_metrics_run_id_fkey",
+          "tableFrom": "webrtc_audio_metrics",
+          "tableTo": "runs",
+          "columnsFrom": [
+            "run_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.webrtc_candidate_pair_metrics": {
+      "name": "webrtc_candidate_pair_metrics",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "run_id": {
+          "name": "run_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "transport_id": {
+          "name": "transport_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "local_candidate_id": {
+          "name": "local_candidate_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "remote_candidate_id": {
+          "name": "remote_candidate_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "state": {
+          "name": "state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "priority": {
+          "name": "priority",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nominated": {
+          "name": "nominated",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "writable": {
+          "name": "writable",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_sent": {
+          "name": "packets_sent",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_sent_per_s": {
+          "name": "packets_sent_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_sent": {
+          "name": "bytes_sent",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_sent_in_bits_per_s": {
+          "name": "bytes_sent_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_received": {
+          "name": "packets_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_received_per_s": {
+          "name": "packets_received_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_received": {
+          "name": "bytes_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_received_in_bits_per_s": {
+          "name": "bytes_received_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_round_trip_time": {
+          "name": "total_round_trip_time",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_round_trip_time_per_responses_received": {
+          "name": "total_round_trip_time_per_responses_received",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "current_round_trip_time": {
+          "name": "current_round_trip_time",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "available_outgoing_bitrate": {
+          "name": "available_outgoing_bitrate",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "requests_received": {
+          "name": "requests_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "requests_sent": {
+          "name": "requests_sent",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "responses_received": {
+          "name": "responses_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "responses_sent": {
+          "name": "responses_sent",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "consent_requests_sent": {
+          "name": "consent_requests_sent",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_discarded_on_send": {
+          "name": "packets_discarded_on_send",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_discarded_on_send": {
+          "name": "bytes_discarded_on_send",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_packet_received_timestamp": {
+          "name": "last_packet_received_timestamp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_packet_sent_timestamp": {
+          "name": "last_packet_sent_timestamp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_webrtc_candidate_pair_metrics_run_id": {
+          "name": "idx_webrtc_candidate_pair_metrics_run_id",
+          "columns": [
+            {
+              "expression": "run_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_webrtc_candidate_pair_metrics_timestamp": {
+          "name": "idx_webrtc_candidate_pair_metrics_timestamp",
+          "columns": [
+            {
+              "expression": "timestamp",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "webrtc_candidate_pair_metrics_run_id_fkey": {
+          "name": "webrtc_candidate_pair_metrics_run_id_fkey",
+          "tableFrom": "webrtc_candidate_pair_metrics",
+          "tableTo": "runs",
+          "columnsFrom": [
+            "run_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.webrtc_data_metrics": {
+      "name": "webrtc_data_metrics",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "run_id": {
+          "name": "run_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "protocol": {
+          "name": "protocol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_channel_identifier": {
+          "name": "data_channel_identifier",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "state": {
+          "name": "state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "messages_sent": {
+          "name": "messages_sent",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "messages_sent_per_s": {
+          "name": "messages_sent_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_sent": {
+          "name": "bytes_sent",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_sent_in_bits_per_s": {
+          "name": "bytes_sent_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "messages_received": {
+          "name": "messages_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "messages_received_per_s": {
+          "name": "messages_received_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_received": {
+          "name": "bytes_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_received_in_bits_per_s": {
+          "name": "bytes_received_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_webrtc_data_metrics_run_id": {
+          "name": "idx_webrtc_data_metrics_run_id",
+          "columns": [
+            {
+              "expression": "run_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_webrtc_data_metrics_timestamp": {
+          "name": "idx_webrtc_data_metrics_timestamp",
+          "columns": [
+            {
+              "expression": "timestamp",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "webrtc_data_metrics_run_id_fkey": {
+          "name": "webrtc_data_metrics_run_id_fkey",
+          "tableFrom": "webrtc_data_metrics",
+          "tableTo": "runs",
+          "columnsFrom": [
+            "run_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.webrtc_video_metrics": {
+      "name": "webrtc_video_metrics",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "run_id": {
+          "name": "run_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ssrc": {
+          "name": "ssrc",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kind": {
+          "name": "kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transport_id": {
+          "name": "transport_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "codec_id": {
+          "name": "codec_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "codec": {
+          "name": "codec",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter": {
+          "name": "jitter",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_lost": {
+          "name": "packets_lost",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "track_identifier": {
+          "name": "track_identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mid": {
+          "name": "mid",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_received": {
+          "name": "packets_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "packets_received_per_s": {
+          "name": "packets_received_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_received": {
+          "name": "bytes_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bytes_received_in_bits_per_s": {
+          "name": "bytes_received_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "header_bytes_received": {
+          "name": "header_bytes_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "header_bytes_received_in_bits_per_s": {
+          "name": "header_bytes_received_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "retransmitted_packets_received": {
+          "name": "retransmitted_packets_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "retransmitted_packets_received_per_s": {
+          "name": "retransmitted_packets_received_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "retransmitted_bytes_received": {
+          "name": "retransmitted_bytes_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "retransmitted_bytes_received_in_bits_per_s": {
+          "name": "retransmitted_bytes_received_in_bits_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rtx_ssrc": {
+          "name": "rtx_ssrc",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_packet_received_timestamp": {
+          "name": "last_packet_received_timestamp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_delay": {
+          "name": "jitter_buffer_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_delay_per_jitter_buffer_emitted_count_in_ms": {
+          "name": "jitter_buffer_delay_per_jitter_buffer_emitted_count_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_target_delay": {
+          "name": "jitter_buffer_target_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_target_delay_per_jitter_buffer_emitted_count_in_ms": {
+          "name": "jitter_buffer_target_delay_per_jitter_buffer_emitted_count_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_minimum_delay": {
+          "name": "jitter_buffer_minimum_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_minimum_delay_per_jitter_buffer_emitted_count_in_ms": {
+          "name": "jitter_buffer_minimum_delay_per_jitter_buffer_emitted_count_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jitter_buffer_emitted_count": {
+          "name": "jitter_buffer_emitted_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frames_received": {
+          "name": "frames_received",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frames_received_per_s": {
+          "name": "frames_received_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frame_width": {
+          "name": "frame_width",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frame_height": {
+          "name": "frame_height",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frames_per_second": {
+          "name": "frames_per_second",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frames_decoded": {
+          "name": "frames_decoded",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frames_decoded_per_s": {
+          "name": "frames_decoded_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "key_frames_decoded": {
+          "name": "key_frames_decoded",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "key_frames_decoded_per_s": {
+          "name": "key_frames_decoded_per_s",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frames_dropped": {
+          "name": "frames_dropped",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_decode_time": {
+          "name": "total_decode_time",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_decode_time_per_frames_decoded_in_ms": {
+          "name": "total_decode_time_per_frames_decoded_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_processing_delay": {
+          "name": "total_processing_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_processing_delay_per_jitter_buffer_emitted_count_in_ms": {
+          "name": "total_processing_delay_per_jitter_buffer_emitted_count_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_assembly_time": {
+          "name": "total_assembly_time",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_assembly_time_per_frames_assembled_from_multiple_packets": {
+          "name": "total_assembly_time_per_frames_assembled_from_multiple_packets",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "frames_assembled_from_multiple_packets": {
+          "name": "frames_assembled_from_multiple_packets",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_inter_frame_delay": {
+          "name": "total_inter_frame_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_inter_frame_delay_per_frames_decoded_in_ms": {
+          "name": "total_inter_frame_delay_per_frames_decoded_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_squared_inter_frame_delay": {
+          "name": "total_squared_inter_frame_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "inter_frame_delay_st_dev_in_ms": {
+          "name": "inter_frame_delay_st_dev_in_ms",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pause_count": {
+          "name": "pause_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_pauses_duration": {
+          "name": "total_pauses_duration",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "freeze_count": {
+          "name": "freeze_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_freezes_duration": {
+          "name": "total_freezes_duration",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "decoder_implementation": {
+          "name": "decoder_implementation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fir_count": {
+          "name": "fir_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pli_count": {
+          "name": "pli_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nack_count": {
+          "name": "nack_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "goog_timing_frame_info": {
+          "name": "goog_timing_frame_info",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "power_efficient_decoder": {
+          "name": "power_efficient_decoder",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "min_playout_delay": {
+          "name": "min_playout_delay",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_webrtc_video_metrics_run_id": {
+          "name": "idx_webrtc_video_metrics_run_id",
+          "columns": [
+            {
+              "expression": "run_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_webrtc_video_metrics_timestamp": {
+          "name": "idx_webrtc_video_metrics_timestamp",
+          "columns": [
+            {
+              "expression": "timestamp",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "webrtc_video_metrics_run_id_fkey": {
+          "name": "webrtc_video_metrics_run_id_fkey",
+          "tableFrom": "webrtc_video_metrics",
+          "tableTo": "runs",
+          "columnsFrom": [
+            "run_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

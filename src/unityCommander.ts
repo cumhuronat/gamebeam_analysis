@@ -21,6 +21,7 @@ export type UnityMessage = ReadyUnityMessage | BaseUnityMessage;
 export class UnityCommander extends EventEmitter {
 	private wss!: WebSocketServer;
 	private client: WebSocket | null = null;
+	private readonly game: string;
 	private readonly port: number;
 	private readonly runId: number;
 	private readonly width: number;
@@ -33,6 +34,7 @@ export class UnityCommander extends EventEmitter {
 	private performanceMonitor: GamePerformanceMonitor | null = null;
 
 	constructor(
+		game: string,
 		runId: number,
 		width = 1920,
 		height = 1080,
@@ -42,6 +44,7 @@ export class UnityCommander extends EventEmitter {
 		port = 8000,
 	) {
 		super();
+		this.game = game;
 		this.runId = runId;
 		this.width = width;
 		this.frameRate = frameRate;
@@ -53,7 +56,7 @@ export class UnityCommander extends EventEmitter {
 	}
 
 	async start(): Promise<void> {
-		const execPath = process.env.UNITY_GAME_PATH;
+		const execPath = process.env[`UNITY_GAME_PATH_${this.game.toUpperCase()}`] as string;
 		if (!execPath) {
 			throw new Error("UNITY_GAME_PATH environment variable is not set");
 		}

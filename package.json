@@ -9,7 +9,10 @@
 		"lib": "src",
 		"bin": "bin"
 	},
-	"files": ["dist", "bin"],
+	"files": [
+		"dist",
+		"bin"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+ssh://git@github.com/cumhuronat/gamebeam-analysis.git"
@@ -22,22 +25,29 @@
 		"start": "tsx ./bin/run.ts",
 		"start:node": "node ./bin/run"
 	},
-	"keywords": ["typescript", "starter", "cli", "bootstrap"],
+	"keywords": [
+		"typescript",
+		"starter",
+		"cli",
+		"bootstrap"
+	],
 	"author": "Cumhur Onat <cumhuronat@gmail.com>",
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@tsconfig/node20": "^20.1.4",
 		"@types/node": "^20.12.12",
+		"@types/pg": "^8.11.11",
 		"@types/yargs": "^17.0.32",
+		"drizzle-kit": "^0.30.5",
 		"tsup": "^8.0.2",
 		"typescript": "^5.4.5"
 	},
 	"dependencies": {
-		"@types/pg": "^8.11.11",
 		"@types/ws": "^8.5.14",
 		"consola": "^3.2.3",
 		"dotenv": "^16.4.5",
+		"drizzle-orm": "^0.41.0",
 		"pg": "^8.13.3",
 		"puppeteer-core": "^24.2.1",
 		"ws": "^8.18.0",

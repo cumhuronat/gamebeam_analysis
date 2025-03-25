@@ -27,13 +27,13 @@ export interface DataChannelMetric extends BaseWebRTCMetric {
 	dataChannelIdentifier?: number;
 	state?: string;
 	messagesSent?: number;
-	messagesSent_per_s?: number;
+	messagesSentPerS?: number;
 	bytesSent?: number;
-	bytesSent_in_bits_per_s?: number;
+	bytesSentInBitsPerS?: number;
 	messagesReceived?: number;
-	messagesReceived_per_s?: number;
+	messagesReceivedPerS?: number;
 	bytesReceived?: number;
-	bytesReceived_in_bits_per_s?: number;
+	bytesReceivedInBitsPerS?: number;
 }
 
 export interface CandidatePairMetric extends BaseWebRTCMetric {
@@ -45,15 +45,15 @@ export interface CandidatePairMetric extends BaseWebRTCMetric {
 	nominated?: boolean;
 	writable?: boolean;
 	packetsSent?: number;
-	packetsSent_per_s?: number;
+	packetsSentPerS?: number;
 	bytesSent?: number;
-	bytesSent_in_bits_per_s?: number;
+	bytesSentInBitsPerS?: number;
 	packetsReceived?: number;
-	packetsReceived_per_s?: number;
+	packetsReceivedPerS?: number;
 	bytesReceived?: number;
-	bytesReceived_in_bits_per_s?: number;
+	bytesReceivedInBitsPerS?: number;
 	totalRoundTripTime?: number;
-	totalRoundTripTime_per_responsesReceived?: number;
+	totalRoundTripTimePerResponsesReceived?: number;
 	currentRoundTripTime?: number;
 	availableOutgoingBitrate?: number;
 	requestsReceived?: number;
@@ -63,8 +63,8 @@ export interface CandidatePairMetric extends BaseWebRTCMetric {
 	consentRequestsSent?: number;
 	packetsDiscardedOnSend?: number;
 	bytesDiscardedOnSend?: number;
-	lastPacketReceivedTimestamp?: number;
-	lastPacketSentTimestamp?: number;
+	lastPacketReceivedTimestamp?: string;
+	lastPacketSentTimestamp?: string;
 }
 
 export interface AudioMetric extends BaseWebRTCMetric {
@@ -80,43 +80,43 @@ export interface AudioMetric extends BaseWebRTCMetric {
 	mid?: number;
 	remoteId?: string;
 	packetsReceived?: number;
-	packetsReceived_per_s?: number;
+	packetsReceivedPerS?: number;
 	packetsDiscarded?: number;
-	packetsDiscarded_per_s?: number;
+	packetsDiscardedPerS?: number;
 	fecPacketsReceived?: number;
-	fecPacketsReceived_per_s?: number;
+	fecPacketsReceivedPerS?: number;
 	fecPacketsDiscarded?: number;
-	fecPacketsDiscarded_per_s?: number;
+	fecPacketsDiscardedPerS?: number;
 	bytesReceived?: number;
-	bytesReceived_in_bits_per_s?: number;
+	bytesReceivedInBitsPerS?: number;
 	headerBytesReceived?: number;
-	headerBytesReceived_in_bits_per_s?: number;
+	headerBytesReceivedInBitsPerS?: number;
 	lastPacketReceivedTimestamp?: string;
 	jitterBufferDelay?: number;
-	jitterBufferDelay_per_jitterBufferEmittedCount_in_ms?: number;
+	jitterBufferDelayPerJitterBufferEmittedCountInMs?: number;
 	jitterBufferTargetDelay?: number;
-	jitterBufferTargetDelay_per_jitterBufferEmittedCount_in_ms?: number;
+	jitterBufferTargetDelayPerJitterBufferEmittedCountInMs?: number;
 	jitterBufferMinimumDelay?: number;
-	jitterBufferMinimumDelay_per_jitterBufferEmittedCount_in_ms?: number;
+	jitterBufferMinimumDelayPerJitterBufferEmittedCountInMs?: number;
 	jitterBufferEmittedCount?: number;
 	totalSamplesReceived?: number;
-	totalSamplesReceived_per_s?: number;
+	totalSamplesReceivedPerS?: number;
 	concealedSamples?: number;
-	concealedSamples_per_s?: number;
-	concealedSamples_per_totalSamplesReceived?: number;
+	concealedSamplesPerS?: number;
+	concealedSamplesPerTotalSamplesReceived?: number;
 	silentConcealedSamples?: number;
-	silentConcealedSamples_per_s?: number;
+	silentConcealedSamplesPerS?: number;
 	concealmentEvents?: number;
 	insertedSamplesForDeceleration?: number;
-	insertedSamplesForDeceleration_per_s?: number;
+	insertedSamplesForDecelerationPerS?: number;
 	removedSamplesForAcceleration?: number;
-	removedSamplesForAcceleration_per_s?: number;
+	removedSamplesForAccelerationPerS?: number;
 	audioLevel?: number;
+	audioLevelInRMS?: number;
 	totalAudioEnergy?: number;
-	Audio_Level_in_RMS?: number;
 	totalSamplesDuration?: number;
 	totalProcessingDelay?: number;
-	totalProcessingDelay_per_jitterBufferEmittedCount_in_ms?: number;
+	totalProcessingDelayPerJitterBufferEmittedCountInMs?: number;
 	jitterBufferFlushes?: number;
 	delayedPacketOutageSamples?: number;
 	relativePacketArrivalDelay?: number;
@@ -135,45 +135,45 @@ export interface VideoMetric extends BaseWebRTCMetric {
 	trackIdentifier?: string;
 	mid?: number;
 	packetsReceived?: number;
-	packetsReceived_per_s?: number;
+	packetsReceivedPerS?: number;
 	bytesReceived?: number;
-	bytesReceived_in_bits_per_s?: number;
+	bytesReceivedInBitsPerS?: number;
 	headerBytesReceived?: number;
-	headerBytesReceived_in_bits_per_s?: number;
+	headerBytesReceivedInBitsPerS?: number;
 	retransmittedPacketsReceived?: number;
-	retransmittedPacketsReceived_per_s?: number;
+	retransmittedPacketsReceivedPerS?: number;
 	retransmittedBytesReceived?: number;
-	retransmittedBytesReceived_in_bits_per_s?: number;
+	retransmittedBytesReceivedInBitsPerS?: number;
 	rtxSsrc?: number;
 	lastPacketReceivedTimestamp?: string;
 	jitterBufferDelay?: number;
-	jitterBufferDelay_per_jitterBufferEmittedCount_in_ms?: number;
+	jitterBufferDelayPerJitterBufferEmittedCountInMs?: number;
 	jitterBufferTargetDelay?: number;
-	jitterBufferTargetDelay_per_jitterBufferEmittedCount_in_ms?: number;
+	jitterBufferTargetDelayPerJitterBufferEmittedCountInMs?: number;
 	jitterBufferMinimumDelay?: number;
-	jitterBufferMinimumDelay_per_jitterBufferEmittedCount_in_ms?: number;
+	jitterBufferMinimumDelayPerJitterBufferEmittedCountInMs?: number;
 	jitterBufferEmittedCount?: number;
 	framesReceived?: number;
-	framesReceived_per_s?: number;
+	framesReceivedPerS?: number;
 	frameWidth?: number;
 	frameHeight?: number;
 	framesPerSecond?: number;
 	framesDecoded?: number;
-	framesDecoded_per_s?: number;
+	framesDecodedPerS?: number;
 	keyFramesDecoded?: number;
-	keyFramesDecoded_per_s?: number;
+	keyFramesDecodedPerS?: number;
 	framesDropped?: number;
 	totalDecodeTime?: number;
-	totalDecodeTime_per_framesDecoded_in_ms?: number;
+	totalDecodeTimePerFramesDecodedInMs?: number;
 	totalProcessingDelay?: number;
-	totalProcessingDelay_per_jitterBufferEmittedCount_in_ms?: number;
+	totalProcessingDelayPerJitterBufferEmittedCountInMs?: number;
 	totalAssemblyTime?: number;
-	totalAssemblyTime_per_framesAssembledFromMultiplePackets_in_ms?: number;
+	totalAssemblyTimePerFramesAssembledFromMultiplePacketsInMs?: number;
 	framesAssembledFromMultiplePackets?: number;
 	totalInterFrameDelay?: number;
-	totalInterFrameDelay_per_framesDecoded_in_ms?: number;
+	totalInterFrameDelayPerFramesDecodedInMs?: number;
 	totalSquaredInterFrameDelay?: number;
-	interFrameDelayStDev_in_ms?: number;
+	interFrameDelayStDevInMs?: number;
 	pauseCount?: number;
 	totalPausesDuration?: number;
 	freezeCount?: number;
@@ -183,7 +183,7 @@ export interface VideoMetric extends BaseWebRTCMetric {
 	pliCount?: number;
 	nackCount?: number;
 	googTimingFrameInfo?: string;
-	powerEfficientDecoder?: number;
+	powerEfficientDecoder?: boolean;
 	minPlayoutDelay?: number;
 }
 
@@ -212,10 +212,13 @@ export class WebrtcDumpParser {
 		timeSeriesMap: Array<BaseWebRTCMetric>,
 	) {
 		const [_, statName] = key.split("-");
-		const statNameSanitized = statName!
+		let statNameSanitized = statName!
 			.replace(/\[/g, "")
 			.replace(/\]/g, "")
-			.replace(/\//g, "_per_");
+			//.replace(/\//g, "Per");
+
+		statNameSanitized = statNameSanitized.replace(/_([a-z])/g, (match, letter) => letter.toUpperCase());
+		statNameSanitized = statNameSanitized.replace(/\/([a-z])/g, (match, letter) => `Per${letter.toUpperCase()}`);
 
 		if (statNameSanitized === "estimatedPlayoutTimestamp") {
 			return;

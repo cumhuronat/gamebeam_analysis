@@ -1,0 +1,1 @@
+ALTER TABLE "webrtc_video_metrics" RENAME COLUMN "total_assembly_time_per_frames_assembled_from_multiple_packets" TO "total_assembly_time_per_frames_assembled_from_multiple_packets_in_ms";

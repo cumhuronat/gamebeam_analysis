@@ -4,10 +4,13 @@ import { logger } from "../logger";
 import type { WebRTCMetrics } from "src/webrtcDumpParser";
 import type WebSocket from "ws";
 import { ClientCommander, type DelayMeasurements } from "../clientCommander";
-import { DatabaseManager } from "../databaseManager";
 import type { PerformanceMetrics } from "../gamePerformanceMonitor";
 import { UnityCommander, type UnityMessage } from "../unityCommander";
 import "dotenv/config";
+import { db } from "../db";
+import * as schema from "../db/schema/schema";
+import { eq } from "drizzle-orm/pg-core/expressions";
+import { performanceMetrics, runs } from "../db/schema/schema";
 
 interface StartArgv {
 	clients?: number;
@@ -17,6 +20,7 @@ interface StartArgv {
 	frameRate?: number;
 	audio?: boolean;
 	hardware?: boolean;
+	game?: string;
 }
 
 export const command = "start";
@@ -29,6 +33,11 @@ export function builder(yargs: Argv): Argv<StartArgv> {
 			type: "number",
 			alias: "c",
 			default: 1,
+		})
+		.option("game", {
+			type: "string",
+			alias: "g",
+			default: "game1",
 		})
 		.option("width", {
 			type: "number",
@@ -68,13 +77,7 @@ let unityCommander: UnityCommander;
 let clients: ClientCommander[] = [];
 let clientsConnected = 0;
 let connectionTimeoutId: NodeJS.Timeout | null = null;
-const databaseManager = new DatabaseManager({
-	host: process.env.DB_HOST || "localhost",
-	port: Number.parseInt(process.env.DB_PORT || "5432"),
-	database: process.env.DB_NAME || "gamebeam",
-	user: process.env.DB_USER || "postgres",
-	password: process.env.DB_PASSWORD || "postgres",
-});
+
 
 let clientCount = 0;
 let runId = 0;
@@ -101,7 +104,7 @@ async function cleanup(deleteRunFromDb = false): Promise<void> {
 	if (deleteRunFromDb) {
 		try {
 			// Delete the run from the database
-			await databaseManager.deleteRun(runId);
+			await db.delete(schema.runs).where(eq(schema.runs.id, runId));
 			logger.info(
 				`Run ${runId} deleted from database due to connection timeout.`,
 			);
@@ -109,8 +112,6 @@ async function cleanup(deleteRunFromDb = false): Promise<void> {
 			logger.error("Error deleting run from database:", error);
 		}
 	}
-
-	databaseManager.close();
 }
 
 export async function handler(argv: ArgumentsCamelCase<StartArgv>) {
@@ -121,20 +122,29 @@ export async function handler(argv: ArgumentsCamelCase<StartArgv>) {
 	const frameRate = argv.frameRate!;
 	const audio = argv.audio!;
 	const hardware = argv.hardware!;
+	const game = argv.game!;
 
-	await databaseManager.initialize();
-
-	runId = await databaseManager.insertRun({
-		clientCount,
+	const result = await db.insert(runs).values({
+		game,
+		clients: clientCount,
 		width,
 		height,
 		duration,
 		frameRate,
+		timestamp: new Date(),
 		audio,
 		hardware,
-	});
+	}).returning({ runId: runs.id });
+
+	if (result[0]) {
+		runId = result[0].runId;
+	}
+	else {
+		throw new Error("Failed to insert run into database");
+	}
 
 	unityCommander = new UnityCommander(
+		game,
 		runId,
 		width,
 		height,
@@ -157,7 +167,10 @@ export async function handler(argv: ArgumentsCamelCase<StartArgv>) {
 	});
 	unityCommander.on("metrics", async (metrics: PerformanceMetrics) => {
 		logger.debug("Performance metrics:", metrics);
-		await databaseManager.insertMetrics(runId, metrics);
+		await db.insert(performanceMetrics).values({
+			...metrics,
+			runId
+		});
 	});
 
 	unityCommander.start();
@@ -184,17 +197,47 @@ function createClientWithIndex(index: number, link: string): Promise<void> {
 		});
 
 		clientCommander.on("metrics", async (metrics: WebRTCMetrics) => {
-			await databaseManager.insertWebRTCMetrics(runId, clientIndex, metrics);
+			for (const metric of metrics.videoMetrics) {
+				await db.insert(schema.webrtcVideoMetrics).values({
+					...metric,
+					runId,
+					clientId: clientIndex,
+				});
+			}
+			for (const metric of metrics.audioMetrics) {
+				await db.insert(schema.webrtcAudioMetrics).values({
+					...metric,
+					runId,
+					clientId: clientIndex,
+				});
+			}
+			for (const metric of metrics.dataChannelMetrics) {
+				await db.insert(schema.webrtcDataMetrics).values({
+					...metric,
+					runId,
+					clientId: clientIndex,
+				});
+			}
+			for (const metric of metrics.candidatePairMetrics) {
+				await db.insert(schema.webrtcCandidatePairMetrics).values({
+					...metric,
+					runId,
+					clientId: clientIndex,
+				});
+			}
 		});
 
 		clientCommander.on(
 			"delayValues",
 			async (delayValues: DelayMeasurements) => {
-				await databaseManager.insertDelayValues(
-					runId,
-					clientIndex,
-					delayValues,
-				);
+				for (const delayValue of delayValues) {
+					await db.insert(schema.delayMeasurements).values({
+						...delayValue,
+						timestamp: new Date(delayValue.timestamp),
+						runId,
+						clientId: clientIndex,
+					});
+				}
 			},
 		);
 
@@ -245,7 +288,9 @@ async function startClients() {
 		logger.info("Game and Timer started.");
 
 		// Update the game_started_at field in the database with the current time
-		await databaseManager.updateGameStartedAt(runId, new Date());
+		await db.update(runs).set({
+			gameStartedAt: new Date(),
+		}).where(eq(runs.id, runId));
 
 		// Set a timer to end the test after the specified duration
 		setTimeout(() => {
