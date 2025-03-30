@@ -23,7 +23,13 @@ export const runs = pgTable("runs", {
 	hardware: boolean().notNull(),
 	timestamp: timestamp().notNull(),
 	gameStartedAt: timestamp(),
-});
+},
+(table) => [
+	index("idx_runs_game_started_date_clients").on(
+		table.gameStartedAt,
+		table.clients,
+	),
+]);
 
 export const performanceMetrics = pgTable(
 	"performance_metrics",
@@ -51,13 +57,9 @@ export const performanceMetrics = pgTable(
 		nvGpuClock: real(),
 	},
 	(table) => [
-		index("idx_performance_metrics_run_id").using(
-			"btree",
-			table.runId.asc(),
-		),
-		index("idx_performance_metrics_timestamp").using(
-			"btree",
-			table.timestamp.asc(),
+		index("idx_performance_metrics_run_ts").on(
+			table.runId,
+			table.timestamp,
 		),
 		foreignKey({
 			columns: [table.runId],
@@ -77,13 +79,10 @@ export const delayMeasurements = pgTable(
 		delay: real().notNull(),
 	},
 	(table) => [
-		index("idx_delay_measurements_run_id").using(
-			"btree",
-			table.runId.asc(),
-		),
-		index("idx_delay_measurements_timestamp").using(
-			"btree",
-			table.timestamp.asc(),
+		index("idx_delay_measurements_run_ts").on(
+			table.runId,
+			table.clientId,
+			table.timestamp,
 		),
 		foreignKey({
 			columns: [table.runId],
@@ -114,13 +113,10 @@ export const webrtcDataMetrics = pgTable(
 		bytesReceivedInBitsPerS: real(),
 	},
 	(table) => [
-		index("idx_webrtc_data_metrics_run_id").using(
-			"btree",
-			table.runId.asc(),
-		),
-		index("idx_webrtc_data_metrics_timestamp").using(
-			"btree",
-			table.timestamp.asc(),
+		index("idx_webrtc_data_metrics_run_ts").on(
+			table.runId,
+			table.clientId,
+			table.timestamp,
 		),
 		foreignKey({
 			columns: [table.runId],
@@ -193,13 +189,10 @@ export const webrtcAudioMetrics = pgTable(
 		totalInterruptionDuration: real(),
 	},
 	(table) => [
-		index("idx_webrtc_audio_metrics_run_id").using(
-			"btree",
-			table.runId.asc(),
-		),
-		index("idx_webrtc_audio_metrics_timestamp").using(
-			"btree",
-			table.timestamp.asc(),
+		index("idx_webrtc_audio_metrics_run_ts").on(
+			table.runId,
+			table.clientId,
+			table.timestamp,
 		),
 		foreignKey({
 			columns: [table.runId],
@@ -278,13 +271,15 @@ export const webrtcVideoMetrics = pgTable(
 		minPlayoutDelay: real(),
 	},
 	(table) => [
-		index("idx_webrtc_video_metrics_run_id").using(
-			"btree",
-			table.runId.asc(),
+		index("idx_webrtc_video_metrics_run_ts").on(
+			table.runId,
+			table.clientId,
+			table.timestamp,
 		),
-		index("idx_webrtc_video_metrics_timestamp").using(
-			"btree",
-			table.timestamp.asc(),
+		index("idx_webrtc_video_metrics_gotimingframeinfo").on(
+			table.runId,
+			table.clientId,
+			table.googTimingFrameInfo,
 		),
 		foreignKey({
 			columns: [table.runId],
@@ -331,13 +326,10 @@ export const webrtcCandidatePairMetrics = pgTable(
 		lastPacketSentTimestamp: text(),
 	},
 	(table) => [
-		index("idx_webrtc_candidate_pair_metrics_run_id").using(
-			"btree",
-			table.runId.asc(),
-		),
-		index("idx_webrtc_candidate_pair_metrics_timestamp").using(
-			"btree",
-			table.timestamp.asc(),
+		index("idx_webrtc_candidate_pair_metrics_run_ts").on(
+			table.runId,
+			table.clientId,
+			table.timestamp,
 		),
 		foreignKey({
 			columns: [table.runId],

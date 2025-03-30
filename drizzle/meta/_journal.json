@@ -15,6 +15,13 @@
       "when": 1742759059977,
       "tag": "0001_violet_jetstream",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1742907596309,
+      "tag": "0002_flowery_mindworm",
+      "breakpoints": true
     }
   ]
 }
